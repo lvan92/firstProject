@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import loading from './loading';
+import user from './user';
 
 const appReducer= combineReducers({
-    loading
+    loading,
+    user
 });
 
 const rootReducer = (state, action) => {

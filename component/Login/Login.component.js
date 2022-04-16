@@ -6,7 +6,9 @@ import { View, StyleSheet, Text, TextInput } from "react-native";
 // redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as loadingActions from '../actions/loading.action';
+import * as loadingActions from '../../actions/loading.action';
+import * as userActions from '../../actions/user.action';
+import uuid from 'uuid';
 
 class Login extends Component {
 
@@ -15,12 +17,17 @@ class Login extends Component {
         password: ''
     }
     onLogin = () => {
-        const { username } = this.state;
-        this.props.loadingActions.loading(true);
-        this.props.onGetLoginStatus(true, username);
-        setTimeout(()=>{
-            this.props.loadingActions.loading(false);
-        },5000)
+        const { username, password } = this.state;
+        if (username) {
+          const user = {
+            key: uuid(),
+            name: username,
+            password
+          }
+          this.props.userActions.add(user);
+          this.props.loadingActions.loading(true);
+          this.props.onGetLoginStatus(true, username);
+        }
     }
     onChangeValue = (value, type) => {
         this.setState({
@@ -70,7 +77,7 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#10f4cc",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -84,6 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     justifyContent: "center",
+    marginVertical: 16,
   },
   Footer: {
     flex: 1,
@@ -93,16 +101,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
-    width: "100%",
     borderRadius: 5,
     width: "40%",
     justifyContent: "center",
     alignItems: "center",
+    fontWeight: "bold"
   },
   inputStyle: {
     backgroundColor: "transparent",
     width: "100%",
     paddingLeft: 20,
+    borderWidth: 1,
+    borderEndColor: 'red',
+    marginVertical: 16, borderRadius:5
   },
 });
 
@@ -115,6 +126,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     loadingActions: bindActionCreators(loadingActions, dispatch),
+    userActions: bindActionCreators(userActions, dispatch)
   };
 }
 
