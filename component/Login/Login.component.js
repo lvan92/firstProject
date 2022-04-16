@@ -18,9 +18,11 @@ class Login extends Component {
     }
     onLogin = () => {
         const { username, password } = this.state;
+        const listUser =  this.props.listUser;
         if (username) {
+          const key = listUser?.length ? listUser.length + 1 : 1;
           const user = {
-            key: uuid(),
+            key: key.toString(),
             name: username,
             password
           }
@@ -120,6 +122,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
   return {
     isLoading: state.loading.isLoading,
+    listUser: state.user.listUser
   };
 }
 

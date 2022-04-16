@@ -28,6 +28,7 @@ export const WellCome = ({ userName, onBackLogin = () => {} }) => {
         onPress={() => alert(item.key)}
       >
         <Text>{item.name}</Text>
+        <Text> {item.password}</Text>
       </TouchableOpacity>
     );
   };
@@ -43,7 +44,7 @@ export const WellCome = ({ userName, onBackLogin = () => {} }) => {
       Keyboard.dismiss();
     if (inputValue) {
       let key = array?.length ? array.length + 1 : 1;
-      const arrayAfter = [...array, { key: uuid() ,  name: inputValue, password: '' }];
+      const arrayAfter = [...array, { key: key.toString(),  name: inputValue, password: '' }];
       setArray(arrayAfter);
       setInput("");
     }
@@ -75,9 +76,10 @@ export const WellCome = ({ userName, onBackLogin = () => {} }) => {
             data={array}
             style={stylesWellCome.list}
             renderItem={renderItem}
-            key={(item, index) => index.key}
+            key={(item, index) => index.toString()}
             scrollToOverflowEnabled={true}
             scrollEnabled={true}
+            overScrollMode="always"
             pad
           />
         </View>

@@ -36,9 +36,10 @@ export const stylesWellCome = StyleSheet.create({
     itemContainer: {
         height: 30,
         alignItems: "center",
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         borderWidth: 0.8,
-        marginVertical:5
+        marginVertical:5,
+        flexDirection: "row",
     },
     backButton: {
         width: '40%',
